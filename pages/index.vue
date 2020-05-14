@@ -1,9 +1,7 @@
 <template lang="pug">
-  <section class="container">
+  section.container
     h1.title Hello
 
-
-  </section>
 </template>
 
 <script>

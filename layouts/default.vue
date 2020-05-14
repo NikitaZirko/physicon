@@ -1,10 +1,8 @@
-<template>
-  <v-app>
-    <Navbar />
-    <v-content>
-      <nuxt/>
-    </v-content>
-  </v-app>
+<template lang="pug">
+  v-app
+    navbar
+    v-content
+      nuxt
 </template>
 
 <script>
