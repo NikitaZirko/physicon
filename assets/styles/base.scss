@@ -1,0 +1,38 @@
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+html {
+  font-size: 62.5%;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: $primary-font;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+img {
+  max-width: 100%;
+}
+
+a {
+  font-size: 1.6rem;
+  text-decoration: none;
+  color: $primary-color;
+  transition: all 0.3s;
+  outline : none;
+  /* &:hover {
+  } */
+}
+
+button {
+  outline : none;
+}
+
+p {
+  font-size: 1.6rem;
+}
