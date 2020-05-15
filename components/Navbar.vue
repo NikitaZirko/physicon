@@ -1,5 +1,5 @@
 <template lang="pug">
-  div
+  section.v-container
     v-app-bar.nav(color="white" flat height="auto")
       .nav__wrap
         .nav__header

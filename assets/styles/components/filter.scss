@@ -1,0 +1,33 @@
+.showcase {
+  margin: 0 auto;
+  padding: 0 20px;
+  max-width: 992px;
+  /* display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  @include media-custom(870px) {
+    justify-content: center;
+  } */
+  .showcase__title {
+    font-size: 3.3rem;
+    font-weight: 300;
+    color: #3c3c3b;
+    text-align: center;
+    padding-top: 20px;
+  }
+}
+
+.s-filters {
+  display: flex;
+  margin: 0 auto;
+  padding-bottom: 10px;
+  flex-wrap: wrap;
+  .s-filter {
+    display: block;
+    height: 46px;
+    width: 170px;
+    color: black;
+  }
+}
+

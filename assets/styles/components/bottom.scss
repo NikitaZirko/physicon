@@ -1,0 +1,23 @@
+@import "@/assets/styles/variables";
+@import "@/assets/styles/media";
+
+.footer {
+  @include flex-center();
+  height: 50px;
+  background-color: #3c3c3c;
+
+  .footer__link {
+    display: block;
+    color: white;
+    &:hover,
+    &:hover > .mdi-github {
+      color: lightgray;
+    }
+
+    .mdi-github {
+      font-size: 20px;
+      font-weight: 300;
+      padding-left: 5px;
+    }
+  }
+}
