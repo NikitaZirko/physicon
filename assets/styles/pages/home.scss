@@ -1,6 +1,46 @@
-.lessons {
+.courses {
   margin: 0 auto;
-  padding: 0 20px;
+  padding: 50px 20px;
   max-width: 992px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+
+  .course {
+    margin: 30px 10px;
+
+    .course__title {
+      font-size: 1.4rem;
+    }
+    .course__subtitle {
+      font-size: 1.4rem;
+      padding: 0 15px;
+    }
+    .course__meta {
+      font-size: 1.1rem;
+      margin: 10px 0 10px;
+    }
+    .course__details {
+      color: #00c1ff;
+      font-size: 1.1rem;
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+    .course__btn {
+      width: 100%;
+      height: 30px;
+      background: #00c1ff;
+      color: white;
+      text-align: center;
+      font-size: 1.2rem;
+      text-transform: capitalize;
+      &:hover {
+        background: #00aee6;
+      }
+    }
+  }
 }
+
+
 

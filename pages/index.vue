@@ -1,7 +1,25 @@
 <template lang="pug">
   section.v-container
     sFilter
-    .lessons
+    .courses
+      v-card.course(
+      v-for="(n, i) in 15" :key="i"
+      max-width="170px" )
+        v-img(
+        class="white--text align-end"
+        height="140px"
+        src="https://cdn.vuetifyjs.com/images/cards/docks.jpg")
+
+        v-card-title.course__title Математика
+
+        v-card-subtitle.course__subtitle 5 - 11 класс
+
+        v-card-text.pb-0
+          p.course__meta Демо
+          a.course__details(href="#") Подробнее
+
+        v-card-actions.px-4
+          v-btn.course__btn(dense text) Попробовать
 
 </template>
 
