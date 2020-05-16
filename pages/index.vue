@@ -3,24 +3,31 @@
     sFilter
     .courses
       v-card.course(
-      v-for="(n, i) in 15" :key="i"
-      max-width="170px" )
+      v-for="(n, i) in courses.items" :key="i"
+      max-width="170px")
+
         v-img(
         class="white--text align-end"
         height="140px"
-        src="https://cdn.vuetifyjs.com/images/cards/docks.jpg")
+        :src="imgUrl + courses.items[i].courseId")
 
-        v-card-title.course__title Математика
+        v-card-title.course__title
+          | {{courses.items[i].subject}}
 
-        v-card-subtitle.course__subtitle 5 - 11 класс
+        v-card-subtitle.course__subtitle
+          | {{(courses.items[i].grade).replace(/;/g, "-") + " Класс"}}
 
         v-card-text.pb-0
-          p.course__meta Демо
-          a.course__details(href="#") Подробнее
+          p.course__meta
+            | {{courses.items[i].genre}}
+          a.course__details(:href="courses.items[i].shopUrl") Подробнее
 
         v-card-actions.px-4
-          v-btn.course__btn(dense text) Попробовать
+          v-btn.course__btn(v-if="currency" dense text)
+            | {{courses.items[i].price + " Руб."}}
 
+          v-btn.course__btn(v-else dense text)
+            | {{courses.items[i].priceBonus + " Бонус"}}
 </template>
 
 <script>
@@ -33,12 +40,29 @@ export default {
   },
   data() {
     return {
-      subject: "Все предметы"
+      subject: "Все предметы",
+      currency: true,
+      imgUrl: "https://www.imumk.ru/svc/coursecover/"
+    }
+  },
+  created() {
+    this.$store.dispatch("courses/apiCourses");
+  },
+  computed: {
+    courses() {
+      return this.$store.getters["courses/getCourses"];
     }
   },
   methods: {
     selected: function() {
       console.log("HALO")
+    }
+  },
+  filters: {
+    rep(value) {
+      if (!value) return ''
+      value = value.toString()
+      return value.replace(';', '-');
     }
   }
 }
