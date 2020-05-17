@@ -13,10 +13,8 @@ export const actions = {
     const saveCourses = await this.$axios.$post('http://krapipl.imumk.ru:8082/api/mobilev1/update')
     commit('SETCOURSES', saveCourses)
   }
-
-
 }
 
 export const getters = {
-  getCourses: st => st.courses,
+  getCourses: st => st.courses
 }

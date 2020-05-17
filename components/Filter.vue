@@ -3,12 +3,8 @@
     h1.showcase__title Витрина
     .s-filters
       v-select.s-filter(
-        class="mx-4"
-        :items="times.id"
-
-        item-text="name"
-        item-value="id"
-
+        class="mx-2"
+        :items="subjects"
         :label="subject"
         v-model="subject"
         solo
@@ -21,11 +17,8 @@
         @change="selected()")
 
       v-select.s-filter(
-        class="mx-4"
-        :items="times.name"
-
-        item-text="title"
-
+        class="mx-2"
+        :items="genres"
         :label="genre"
         v-model="genre"
         solo
@@ -38,8 +31,8 @@
         @change="selected()")
 
       v-select.s-filter(
-        class="mx-4"
-        :items="times.time_from"
+        class="mx-2"
+        :items="grades"
         :label="grade"
         v-model="grade"
         solo
@@ -52,7 +45,7 @@
         @change="selected()")
 
       v-text-field(
-        class="mx-4"
+        class="mx-2"
         flat
         dense
         hide-details
@@ -78,33 +71,28 @@ export default {
       subject: "Все предметы",
       genre: "Все жанры",
       grade: "Все классы",
-      search: "",
-      times: [
-        {
-          id: 1,
-          name: "утренний",
-          time_from: "T06:00:00",
-          time_to: "T12:00:00"
-        },
-        {
-          id: 2,
-          name: "дневной",
-          time_from: "T12:00:00",
-          time_to: "T17:00:00"
-        },
-        {
-          id: 3,
-          name: "вечерний",
-          time_from: "T17:00:00",
-          time_to: "T22:00:00"
-        },
-        {
-          id: 4,
-          name: "ночной",
-          time_from: "T22:00:00",
-          time_to: "T06:00:00"
-        }
-      ],
+      grades: [1,2,3,4,5,6,7,8,9,10,11],
+      search: ""
+    }
+  },
+  computed: {
+    subjects() {
+      let result = [];
+      let subjects = this.$store.getters["courses/getCourses"].items || 0;
+      for (let i = 0; i < subjects.length; i++) {
+        result.push(subjects[i].subject)
+      }
+      let uniqSubjects = [...new Set(result)];
+      return uniqSubjects
+    },
+    genres() {
+      let result = [];
+      let genres = this.$store.getters["courses/getCourses"].items || 0;
+      for (let i = 0; i < genres.length; i++) {
+        result.push(genres[i].genre)
+      }
+      let uniqGenres = [...new Set(result)];
+      return uniqGenres
     }
   },
   methods: {
