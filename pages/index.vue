@@ -1,15 +1,31 @@
 <template lang="pug">
   section.v-container
     sFilter
+    .currency
+      v-select(
+        class="toggleCurrency"
+        :items="currencyItems"
+        v-model="currencyItem"
+        chips
+        dense
+        @change="currency = !currency")
+
+        template(v-slot:selection="{ item, index }")
+          v-chip(v-if="index === 0")
+            span
+              | {{ item }}
+          span.grey--text.caption(v-if="index === 1")
+              | (+{{ model.length - 1 }} others)
+
     .courses
       v-card.course(
-      v-for="(n, i) in courses.items" :key="i"
-      max-width="170px")
+        v-for="(n, i) in courses.items" :key="i"
+        max-width="170px")
 
         v-img(
-        class="white--text align-end"
-        height="140px"
-        :src="imgUrl + courses.items[i].courseId")
+          class="white--text align-end"
+          height="140px"
+          :src="imgUrl + courses.items[i].courseId")
 
         v-card-title.course__title
           | {{courses.items[i].subject}}
@@ -40,8 +56,9 @@ export default {
   },
   data() {
     return {
-      subject: "Все предметы",
       currency: true,
+      currencyItem: 'Руб.',
+      currencyItems: ['Руб.', 'Бонусы'],
       imgUrl: "https://www.imumk.ru/svc/coursecover/"
     }
   },
@@ -56,13 +73,6 @@ export default {
   methods: {
     selected: function() {
       console.log("HALO")
-    }
-  },
-  filters: {
-    rep(value) {
-      if (!value) return ''
-      value = value.toString()
-      return value.replace(';', '-');
     }
   }
 }

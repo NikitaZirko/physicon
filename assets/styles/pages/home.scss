@@ -1,6 +1,17 @@
+.currency {
+  margin: 0 auto;
+  padding: 0 48px;
+  max-width: 992px;
+  display: flex;
+  justify-content: flex-end;
+  .toggleCurrency {
+    max-width: 150px;
+  }
+}
+
 .courses {
   margin: 0 auto;
-  padding: 50px 20px;
+  padding: 30px 20px;
   max-width: 992px;
   display: flex;
   flex-wrap: wrap;
