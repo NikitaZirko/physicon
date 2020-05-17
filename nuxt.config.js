@@ -23,6 +23,12 @@ module.exports = {
   */
   loading: { color: '#3B8070' },
   /*
+  ** Global CSS
+  */
+  css: [
+    '@/assets/styles/global.css'
+  ],
+  /*
   ** Nuxt.js modules
   */
   modules: [
