@@ -2,6 +2,7 @@
   section.v-container.showcase
     h1.showcase__title Витрина
     .s-filters
+      //- filter subjects
       v-select.s-filter(
         clear-icon="mdi-close-circle"
         clearable
@@ -17,8 +18,8 @@
         color="#00c1ff"
         :menu-props="{ bottom: true, offsetY: true }"
         @click:clear="resetFilter('subject')"
-        @change="selectClick($event, 'subject')")
-
+        @change="$emit('clickListItem', {val: $event, ev: 'subject'})")
+      //- filter genres
       v-select.s-filter(
         clear-icon="mdi-close-circle"
         clearable
@@ -34,8 +35,8 @@
         color="#00c1ff"
         :menu-props="{ bottom: true, offsetY: true }"
         @click:clear="resetFilter('genre')"
-        @change="selectClick($event, 'genre')")
-
+        @change="$emit('clickListItem', {val: $event, ev: 'genre'})")
+      //- filter grades
       v-select.s-filter(
         clear-icon="mdi-close-circle"
         clearable
@@ -51,8 +52,8 @@
         color="#00c1ff"
         :menu-props="{ bottom: true, offsetY: true }"
         @click:clear="resetFilter('grade')"
-        @change="selectClick($event, 'grade')")
-
+        @change="$emit('clickListItem', {val: $event, ev: 'grade'})")
+      //- search filter
       v-text-field(
         class="mx-2"
         flat
@@ -77,11 +78,12 @@ import axios from "axios";
 export default {
   data() {
     return {
-      grades: [1,2,3,4,5,6,7,8,9,10,11],
+      grades: [1,2,3,4,5,6,7,8,9,10,11], // getting data for grades
       search: ""
     }
   },
   computed: {
+    // getting data for subjects
     subjects() {
       let result = [];
       let subjects = this.$store.getters["courses/getCourses"] || 0;
@@ -90,6 +92,7 @@ export default {
       }
       return [...new Set(result)];
     },
+    // getting data for genres
     genres() {
       let result = [];
       let genres = this.$store.getters["courses/getCourses"] || 0;
@@ -100,33 +103,10 @@ export default {
     }
   },
   methods: {
-    selectClick: function(value, nameEv) {
-      let dataClick = {
-        val: value,
-        name: nameEv
-      };
-      this.$store.dispatch("courses/filteringByCourses", dataClick);
-    },
     clearMessage () {
       this.search = ''
-    },
-    resetFilter (select) {
-      switch (select) {
-        case "subject":
-          console.log("subject");
-          //this.$store.dispatch("courses/resetSubject");
-          break;
-        case "genre":
-          console.log("genre");
-          //this.$store.dispatch("courses/resetGenre");
-          break;
-        case "grade":
-          console.log("grade");
-          //this.$store.dispatch("courses/resetGrade");
-          break;
-      }
-    },
-  },
+    }
+  }
 }
 </script>
 

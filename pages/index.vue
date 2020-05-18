@@ -1,6 +1,8 @@
 <template lang="pug">
   section.v-container
-    ph-filter
+    //- component filter navigation
+    ph-filter(@clickListItem="clickListItem($event)")
+    //- toggle ruble-bonus
     .currency
       v-select(
         class="toggleCurrency"
@@ -9,14 +11,11 @@
         chips
         dense
         @change="currency = !currency")
-
         template(v-slot:selection="{ item, index }")
           v-chip(v-if="index === 0")
             span
               | {{ item }}
-          span.grey--text.caption(v-if="index === 1")
-              | (+{{ model.length - 1 }} others)
-
+    //- grid courses
     .courses(v-if="courses.length")
       v-card.course(
         v-for="(n, i) in courses" :key="i"
@@ -43,7 +42,7 @@
             | {{courses[i].price + " Руб."}}
           v-btn.course__btn(v-else dense text)
             | {{courses[i].priceBonus + " Бонус"}}
-
+    //- courses not found
     template(v-else-if="isloaded")
       .empty
         h3 Результаты поиска:
@@ -60,7 +59,10 @@ export default {
   },
   data() {
     return {
-      isloaded : false,
+      subject: null,
+      genre: null,
+      grade: null,
+      isloaded: false,
       currency: true,
       currencyItem: 'Руб.',
       currencyItems: ['Руб.', 'Бонусы'],
@@ -68,9 +70,11 @@ export default {
     }
   },
   created() {
+    // send a request api
     this.$store.dispatch("courses/apiCourses");
   },
   watch: {
+    // disabling the courses not found - when loading a page
     courses(newValue, oldValue) {
       if (this.courses.length) {
         this.isloaded = true;
@@ -79,7 +83,42 @@ export default {
   },
   computed: {
     courses() {
-      return this.$store.getters["courses/getCourses"];
+      let update = this.$store.getters["courses/getCourses"];
+      // filtering courses at select item subject
+      if (this.subject) {
+        update = update.filter(
+          (el) => el.subject == this.subject
+        );
+      }
+      // filtering courses at select item genre
+      if (this.genre) {
+        update = update.filter(
+          (el) => el.genre == this.genre
+        );
+      }
+      // filtering courses at select item grade
+      if (this.grade) {
+        update = update.filter(
+          (el) => el.grade == this.grade
+        );
+      }
+      return update
+    }
+  },
+  methods: {
+    // checking click
+    clickListItem(sel) {
+      switch (sel.ev) {
+        case "subject":
+          this.subject = sel.val
+          break;
+        case "genre":
+          this.genre = sel.val
+          break;
+        case "grade":
+          this.grade = sel.val
+          break;
+      }
     }
   }
 }
