@@ -1,9 +1,9 @@
 <template lang="pug">
   v-app
-    navbar
+    ph-navbar
     v-content
       nuxt
-    bottom
+    ph-bottom
 </template>
 
 <script>
@@ -12,8 +12,8 @@ import Bottom from "@/components/Bottom";
 
 export default {
   components: {
-    Navbar,
-    Bottom
+    "ph-navbar": Navbar,
+    "ph-bottom": Bottom
   }
 };
 </script>

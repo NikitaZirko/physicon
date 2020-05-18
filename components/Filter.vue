@@ -3,10 +3,12 @@
     h1.showcase__title Витрина
     .s-filters
       v-select.s-filter(
+        clear-icon="mdi-close-circle"
+        clearable
         class="mx-2"
         :items="subjects"
-        :label="subject"
-        v-model="subject"
+        label="Все предметы"
+        cache-items
         solo
         flat
         dense
@@ -14,13 +16,16 @@
         outlined
         color="#00c1ff"
         :menu-props="{ bottom: true, offsetY: true }"
-        @change="selected()")
+        @click:clear="resetFilter('subject')"
+        @change="selectClick($event, 'subject')")
 
       v-select.s-filter(
+        clear-icon="mdi-close-circle"
+        clearable
         class="mx-2"
         :items="genres"
-        :label="genre"
-        v-model="genre"
+        label="Все жанры"
+        cache-items
         solo
         flat
         dense
@@ -28,13 +33,16 @@
         outlined
         color="#00c1ff"
         :menu-props="{ bottom: true, offsetY: true }"
-        @change="selected()")
+        @click:clear="resetFilter('genre')"
+        @change="selectClick($event, 'genre')")
 
       v-select.s-filter(
+        clear-icon="mdi-close-circle"
+        clearable
         class="mx-2"
         :items="grades"
-        :label="grade"
-        v-model="grade"
+        label="Все классы"
+        cache-items
         solo
         flat
         dense
@@ -42,7 +50,8 @@
         outlined
         color="#00c1ff"
         :menu-props="{ bottom: true, offsetY: true }"
-        @change="selected()")
+        @click:clear="resetFilter('grade')"
+        @change="selectClick($event, 'grade')")
 
       v-text-field(
         class="mx-2"
@@ -68,9 +77,6 @@ import axios from "axios";
 export default {
   data() {
     return {
-      subject: "Все предметы",
-      genre: "Все жанры",
-      grade: "Все классы",
       grades: [1,2,3,4,5,6,7,8,9,10,11],
       search: ""
     }
@@ -78,29 +84,47 @@ export default {
   computed: {
     subjects() {
       let result = [];
-      let subjects = this.$store.getters["courses/getCourses"].items || 0;
+      let subjects = this.$store.getters["courses/getCourses"] || 0;
       for (let i = 0; i < subjects.length; i++) {
         result.push(subjects[i].subject)
       }
-      let uniqSubjects = [...new Set(result)];
-      return uniqSubjects
+      return [...new Set(result)];
     },
     genres() {
       let result = [];
-      let genres = this.$store.getters["courses/getCourses"].items || 0;
+      let genres = this.$store.getters["courses/getCourses"] || 0;
       for (let i = 0; i < genres.length; i++) {
         result.push(genres[i].genre)
       }
-      let uniqGenres = [...new Set(result)];
-      return uniqGenres
+      return [...new Set(result)];
     }
   },
   methods: {
-    selected: function() {
-      console.log("HALO")
+    selectClick: function(value, nameEv) {
+      let dataClick = {
+        val: value,
+        name: nameEv
+      };
+      this.$store.dispatch("courses/filteringByCourses", dataClick);
     },
     clearMessage () {
       this.search = ''
+    },
+    resetFilter (select) {
+      switch (select) {
+        case "subject":
+          console.log("subject");
+          //this.$store.dispatch("courses/resetSubject");
+          break;
+        case "genre":
+          console.log("genre");
+          //this.$store.dispatch("courses/resetGenre");
+          break;
+        case "grade":
+          console.log("grade");
+          //this.$store.dispatch("courses/resetGrade");
+          break;
+      }
     },
   },
 }

@@ -1,6 +1,6 @@
 <template lang="pug">
   section.v-container
-    sFilter
+    ph-filter
     .currency
       v-select(
         class="toggleCurrency"
@@ -17,7 +17,7 @@
           span.grey--text.caption(v-if="index === 1")
               | (+{{ model.length - 1 }} others)
 
-    .courses
+    .courses(v-if="courses.length")
       v-card.course(
         v-for="(n, i) in courses" :key="i"
         max-width="170px")
@@ -41,21 +41,26 @@
         v-card-actions.px-4
           v-btn.course__btn(v-if="currency" dense text)
             | {{courses[i].price + " Руб."}}
-
           v-btn.course__btn(v-else dense text)
             | {{courses[i].priceBonus + " Бонус"}}
+
+    template(v-else-if="isloaded")
+      .empty
+        h3 Результаты поиска:
+        p Курсы не найдены
 </template>
 
 <script>
 import axios from "axios";
-import sFilter from "@/components/Filter";
+import Filter from "@/components/Filter";
 
 export default {
   components: {
-    sFilter
+    "ph-filter": Filter
   },
   data() {
     return {
+      isloaded : false,
       currency: true,
       currencyItem: 'Руб.',
       currencyItems: ['Руб.', 'Бонусы'],
@@ -65,14 +70,16 @@ export default {
   created() {
     this.$store.dispatch("courses/apiCourses");
   },
-  computed: {
-    courses() {
-      return this.$store.getters["courses/getCourses"].items;
+  watch: {
+    courses(newValue, oldValue) {
+      if (this.courses.length) {
+        this.isloaded = true;
+      }
     }
   },
-  methods: {
-    selected: function() {
-      console.log("HALO")
+  computed: {
+    courses() {
+      return this.$store.getters["courses/getCourses"];
     }
   }
 }
