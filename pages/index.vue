@@ -3,7 +3,8 @@
     //- component filter navigation
     ph-filter(
       @clickListItem="clickListItem($event)"
-      :resetFilter="resetFilter")
+      :resetFilter="resetFilter"
+      :searchSubject="searchSubject")
     //- toggle ruble-bonus
     .currency
       v-select(
@@ -64,6 +65,7 @@ export default {
       subject: null,
       genre: null,
       grade: null,
+      search: null,
       isloaded: false,
       currency: true,
       currencyItem: 'Руб.',
@@ -104,6 +106,13 @@ export default {
           (el) => el.grade == this.grade
         );
       }
+      // filtering courses at search
+      if (this.search) {
+        update = update.filter(
+          (el) => el.subject.indexOf(this.search) !== -1
+        );
+      }
+
       return update
     }
   },
@@ -135,6 +144,10 @@ export default {
           this.grade = null
           break;
       }
+    },
+    // pass text search from component
+    searchSubject(letters) {
+      this.search = letters
     }
   }
 }

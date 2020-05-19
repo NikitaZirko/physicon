@@ -72,6 +72,7 @@
         clear-icon="mdi-close-circle"
         clearable
         type="text"
+        @input="searchSubject(search)"
         @click:append-outer="clearMessage"
         @click:clear="clearMessage")
 </template>
@@ -82,6 +83,9 @@ import axios from "axios";
 export default {
   props: {
     resetFilter: {
+      type: Function
+    },
+    searchSubject: {
       type: Function
     }
   },
