@@ -103,7 +103,7 @@ export default {
       // filtering courses at select item grade
       if (this.grade) {
         update = update.filter(
-          (el) => el.grade == this.grade
+          (el) => el.grade.split(";").some(e => e == this.grade)
         );
       }
       // filtering courses at search
@@ -112,7 +112,6 @@ export default {
           (el) => el.subject.indexOf(this.search) !== -1
         );
       }
-
       return update
     }
   },
