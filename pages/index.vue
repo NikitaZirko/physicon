@@ -1,7 +1,9 @@
 <template lang="pug">
   section.v-container
     //- component filter navigation
-    ph-filter(@clickListItem="clickListItem($event)")
+    ph-filter(
+      @clickListItem="clickListItem($event)"
+      :resetFilter="resetFilter")
     //- toggle ruble-bonus
     .currency
       v-select(
@@ -106,7 +108,7 @@ export default {
     }
   },
   methods: {
-    // checking click
+    // checking click on item
     clickListItem(sel) {
       switch (sel.ev) {
         case "subject":
@@ -117,6 +119,20 @@ export default {
           break;
         case "grade":
           this.grade = sel.val
+          break;
+      }
+    },
+    // checking click on reset
+    resetFilter(res) {
+      switch (res) {
+        case "subject":
+          this.subject = null
+          break;
+        case "genre":
+          this.genre = null
+          break;
+        case "grade":
+          this.grade = null
           break;
       }
     }

@@ -2,6 +2,7 @@
   section.v-container.showcase
     h1.showcase__title Витрина
     .s-filters
+
       //- filter subjects
       v-select.s-filter(
         clear-icon="mdi-close-circle"
@@ -19,6 +20,7 @@
         :menu-props="{ bottom: true, offsetY: true }"
         @click:clear="resetFilter('subject')"
         @change="$emit('clickListItem', {val: $event, ev: 'subject'})")
+
       //- filter genres
       v-select.s-filter(
         clear-icon="mdi-close-circle"
@@ -36,6 +38,7 @@
         :menu-props="{ bottom: true, offsetY: true }"
         @click:clear="resetFilter('genre')"
         @change="$emit('clickListItem', {val: $event, ev: 'genre'})")
+
       //- filter grades
       v-select.s-filter(
         clear-icon="mdi-close-circle"
@@ -53,6 +56,7 @@
         :menu-props="{ bottom: true, offsetY: true }"
         @click:clear="resetFilter('grade')"
         @change="$emit('clickListItem', {val: $event, ev: 'grade'})")
+
       //- search filter
       v-text-field(
         class="mx-2"
@@ -60,6 +64,7 @@
         dense
         hide-details
         label="Поиск"
+        ref="search"
         v-model="search"
         outlined
         color="#00c1ff"
@@ -69,13 +74,17 @@
         type="text"
         @click:append-outer="clearMessage"
         @click:clear="clearMessage")
-
 </template>
 
 <script>
 import axios from "axios";
 
 export default {
+  props: {
+    resetFilter: {
+      type: Function
+    }
+  },
   data() {
     return {
       grades: [1,2,3,4,5,6,7,8,9,10,11], // getting data for grades
